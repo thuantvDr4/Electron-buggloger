@@ -1,6 +1,12 @@
 const path = require("path");
 const url = require("url");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+//
+const Log = require("./src/models/Log");
+const connectDB = require("./src/config/db");
+
+//connect to database
+connectDB();
 
 let mainWindow;
 
@@ -68,6 +74,22 @@ function createMainWindow() {
 
 app.on("ready", createMainWindow);
 
+//listen event -client
+ipcMain.on("logs:load", (e, opt) => {
+  sendLogs();
+});
+
+//all functions
+async function sendLogs() {
+  try {
+    const logs = await Log.find().sort({ created: 1 });
+    mainWindow.webContents.send("logs:get", JSON.stringify(logs));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
