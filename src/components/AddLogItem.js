@@ -20,6 +20,11 @@ const AddLogItem = ({ addItem, addItemStatus = "0" }) => {
   useEffect(() => {
     if (addItemStatus === "success") {
       showAlert("Add log is success!", "success");
+      return;
+    }
+    if (addItemStatus === "remove") {
+      showAlert("Log is removed", "warning");
+      return;
     }
   }, [addItemStatus]);
 
@@ -29,7 +34,6 @@ const AddLogItem = ({ addItem, addItemStatus = "0" }) => {
 
     if (text === "" || user === "" || priority === "") {
       showAlert("Log, User and Priority is require!", "danger");
-      clearForm();
       return;
     }
     if (text.trim() === "" || user.trim() === "" || priority === "0") {
@@ -41,7 +45,7 @@ const AddLogItem = ({ addItem, addItemStatus = "0" }) => {
     //
     addItem &&
       addItem({
-        _id: uuidv4(),
+        // _id: uuidv4(),
         text: text,
         priority: priority,
         user: user,
@@ -71,11 +75,11 @@ const AddLogItem = ({ addItem, addItemStatus = "0" }) => {
         message: "",
         variant: "success",
       });
-    }, 3000);
+    }, 2000);
   };
 
   return (
-    <Card className="mt-5 md3">
+    <Card className="mt-3 md3">
       <Card.Body>
         <Form onSubmit={handleSubmit}>
           <Row className="my-3">

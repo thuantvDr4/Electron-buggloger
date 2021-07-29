@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      "mongodb+srv://thuancafe:thuancafe@cluster0.sgzov.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+      "mongodb+srv://thuancafe:thuancafe@cluster0.sgzov.mongodb.net/bug-logger?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        //useCreateIndex: true,
+        useCreateIndex: true,
       }
     );
 
